@@ -71,8 +71,9 @@ passport.use(new LocalStrategy(
 		console.log(username);
 		console.log(password);
 		// Extracts the sequelize connection from the models object
-    var sequelizeConnection = models.sequelize;
-		models.user.findOne({where: {username:username}}).then(function(user) {
+		var sequelizeConnection = models.sequelize;
+
+		models.User.findOne({where: {username:username}}).then(function(user) {
 			if (!user) {
 				console.log('username does not exist')
 		    done(null,false);

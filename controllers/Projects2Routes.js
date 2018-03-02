@@ -59,7 +59,7 @@ router.get('/detail', function (req, res) {
       // }
   });
 
-router.post("/login", passport.authenticate(
+router.post('/login', passport.authenticate(
   'local', {
       successRedirect: '/home',
       failureRedirect: '/login'
@@ -121,18 +121,12 @@ router.post("/register", function(req, res) {
 });
 
 
-passport.serializeUser(function(user,done){
+passport.serializeUser(function(user_id,done){
   done(null,user_id);
 });
 // deserialize user 
-passport.deserializeUser(function(id, done) {
-  User.findById(id).then(function(user) {
-      if (user) {
-          done(null, user.get());
-      } else {
-          done(user.errors, null);
-      }
-  });
+passport.deserializeUser(function(user_id,done){
+  done(null,user_id);
 });
 
 function authenticationMiddleware(){
