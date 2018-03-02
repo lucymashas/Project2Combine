@@ -1,4 +1,3 @@
-
 		var express = require("express");
 		var bodyParser = require("body-parser");
 		var methodOverride = require('method-override')
@@ -14,7 +13,7 @@
 		var MySQLStore = require('express-mysql-session')(session);
 		var bcrypt = require('bcrypt');
 
-		// Express set up
+		// Express set upls
 
 		var app = express();
 		var PORT = process.env.PORT || 3000;
@@ -36,23 +35,24 @@
 		app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 		app.set("view engine", "handlebars");
 
-		// sessions
-var options = {
-  host: "localhost",
-  port: 3000,
-  user: "root",
-  password: "",
-  database: "ProjectTwo"
-};
+// 		sessions
+// var options = {
+//   host: "localhost",
+//   port: 3000,
+//   user: "root",
+// 	password: "",
+// 	"operatorsAliases": false,
+//   database: "ProjectTwo"
+// };
 
-var connection = mysql.createConnection(options); // or mysql.createPool(options);
-var sessionStore = new MySQLStore({}/* session store options */, connection);
+// var connection = mysql.createConnection(options); // or mysql.createPool(options);
+// var sessionStore = new MySQLStore({}/* session store options */, connection);
 
 //Session  part of express-session, secret could use a random key generator for now I assign a string of characters
 app.use(session({
   secret: 'iuytrfghjkl',
   resave: false,
-  store: sessionStore,
+  // store: sessionStore,
   saveUninitialized: false,
   // cookie: { secure: true }
 }))
@@ -61,28 +61,41 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(function (req,res,next){
-  res.locals.isAuthenticated =req.isAuthenticated();
-  next()
+  res.locals.isAuthenticated = req.isAuthenticated();
+  	next()
 })
 
-// var logdb = require("./config/connection.js");
-// Extracts the sequelize connection from the models object
-// var sequelizeConnection = models.sequelize;
-
+//passport Local Strategy
 passport.use(new LocalStrategy(
-	function(username,password,done){
+  function(username,password,done){
 		console.log(username);
 		console.log(password);
-	}
-));
+		// Extracts the sequelize connection from the models object
+    var sequelizeConnection = models.sequelize;
+		models.user.findOne({where: {username:username}}).then(function(user) {
+			if (!user) {
+				console.log('username does not exist')
+		    done(null,false);
+			}
+			var isValidPassword = function(userpass, password) {
+							return bCrypt.compareSync(password, userpass);
+					}
+			if (isValidPassword){
+				return done(null,{user_id:  user.dataValues.id})
+			}else{
+				return done(null,false);
+			}
+
+			})
+		}
+	))
 
 app.use(expressValidator());
 
 
-		// Import routes and give the server access to them.
-		var router = require("./controllers/Projects2Routes.js");
-		app.use('/',router);		
-		// require("./controllers/signon.js")(app);		
+	// Import routes and give the server access to them.
+	var router = require("./controllers/Projects2Routes.js");
+	app.use('/',router);		
 
 		// Syncing our sequelize models and then starting our express app
 		db.sequelize.sync({ force: false })

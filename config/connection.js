@@ -15,6 +15,7 @@ var opts = {
 var sequelize = new Sequelize("ProjectTwo", "root", "", {
   host: "localhost",
   dialect: "mysql",
+  "operatorsAliases": false,
   pool: {
     max: 5,
     min: 0,

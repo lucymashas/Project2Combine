@@ -9,9 +9,6 @@ var passport = require('passport');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-// var logdb = require("../config/connection.js");
-
-
 // Extracts the sequelize connection from the models object
 var sequelizeConnection = models.sequelize;
 
@@ -23,12 +20,14 @@ sequelizeConnection.sync
 // ----------------------------------------------------
 
 // Index Redirect
-router.get('/', function (req, res) {
-  res.redirect('/login');
-  // res.redirect('login',{title: 'Login'});
+router.get("/", function(req, res) {
+  res.render('login',{title: 'Personal Assets Management Login'});
+  // res.render('index');
 });
-router.get("/login", function(req, res) {
-  res.render('login', {title: 'Login'});
+
+router.get("/", function(req, res) {
+  res.render('login',{title: 'Personal Assets Management Login'});
+  // res.render('index');
 });
 
 router.get('/detail', function (req, res) {
@@ -41,10 +40,9 @@ router.get('/detail', function (req, res) {
       }) 
 })
 
-// router.get('/index', function (req, res) {
   router.get("/home", authenticationMiddleware(),
-  function(req, res) {
-      models.loc.findAll({
+    function(req, res) {
+        models.loc.findAll({
 
         }).then(function(data){
           // Pass the returned data into a Handlebars object and then nder it
@@ -58,20 +56,19 @@ router.get('/detail', function (req, res) {
       //     // Pass the returned data into a Handlebars object and then render it
       //     var hbsObject = { title: 'Locations', items: data }
       //     res.render('index', hbsObject);
-      // })
+      // }
+  });
 
-
-});
-router.post("/login", passport.authenticate('local', {
-  successRedirect: '/home',
-  failureRedirect: '/login'
+router.post("/login", passport.authenticate(
+  'local', {
+      successRedirect: '/home',
+      failureRedirect: '/login'
 }));
 
 router.get('/logout', function(req,res){
   req.logout();
   req.session.destroy();
   res.redirect('/')
-        
 });
   
 router.get("/register",function(req,res){
@@ -124,11 +121,18 @@ router.post("/register", function(req, res) {
 });
 
 
-passport.serializeUser(function(user_id,done){
+passport.serializeUser(function(user,done){
   done(null,user_id);
 });
-passport.deserializeUser(function(user_id,done){
-  done(null,user_id);
+// deserialize user 
+passport.deserializeUser(function(id, done) {
+  User.findById(id).then(function(user) {
+      if (user) {
+          done(null, user.get());
+      } else {
+          done(user.errors, null);
+      }
+  });
 });
 
 function authenticationMiddleware(){
