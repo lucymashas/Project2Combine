@@ -1,0 +1,26 @@
+{{>header}}
+{{>buttons}}
+
+<div class="container">
+  <table class="table table-bordered table-condensed">
+  <thead>
+      <tr>
+        <th>Item ID</th>
+        <th>Item Name</th>
+        <th>Item Value</th>
+      </tr>
+    </thead>
+  <tbody>
+       {{#each items}}
+       <tr>
+          <td>{{itemID}}</td>
+          <td>{{name}}</td>
+          <td>{{value}}</td>
+      </tr>
+      {{/each}}
+  </tbody>
+</table>
+
+</div>
+
+
