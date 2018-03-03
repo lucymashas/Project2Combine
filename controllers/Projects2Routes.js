@@ -22,15 +22,13 @@ sequelizeConnection.sync
 // Index Redirect
 router.get("/", function(req, res) {
   res.render('login',{title: 'Personal Assets Login'});
-  // res.render('index');
 });
 
 router.get("/", function(req, res) {
   res.render('login',{title: 'Personal Assets Login'});
-  // res.render('index');
 });
 
-  router.get("/home", authenticationMiddleware(),
+  router.get("/index", authenticationMiddleware(),
     function(req, res) {
       models.Loc.findAll({
       }).then(function(data){
@@ -39,6 +37,14 @@ router.get("/", function(req, res) {
         res.render('index', hbsObject);
     })
 });
+router.get('/index', function(req, res) {          
+  models.Loc.findAll({
+    }).then(function(data){
+      // Pass the returned data into a Handlebars object and then render it
+      var hbsObject = { title: 'Locations', homebox: 'Loc', items: data }
+      res.render('index', hbsObject);
+  })
+})
 
   router.get('/button1', function(req, res) {          
     models.Loc.findAll({
@@ -71,7 +77,7 @@ router.get("/", function(req, res) {
 
 router.post('/login', passport.authenticate(
   'local', {
-      successRedirect: '/home',
+      successRedirect: '/index',
       failureRedirect: '/'
 }));
 

@@ -1,4 +1,5 @@
 {{>header}}
+<input name='current' value='{{homebox}}' type='hidden' id='menutype'>
 {{>buttons}}
 <h1>{{title}}</h1>
  <div id="wrapper">
@@ -9,7 +10,7 @@
                     {{#each items}}
                     <div class="col-xs-3">
                             <div class="thumbnail">
-                                    <img src="/assets/images/hmthumbnail2.png" alt={{name}} key='{{itemID}}'>
+                                    <img src="/assets/images/hmthumbnail2.png" alt='{{name}}' key='{{id}}' searchType='{{name}}'>
                                     <div class="caption" style='text-align: center'>{{name}}</div>
                             </div>
                     </div> 
