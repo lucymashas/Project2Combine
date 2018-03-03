@@ -1,27 +1,31 @@
 {{>header}}
 {{>buttons}}
-<br><br><br>
-<div class="container">
-  <table class="table table-bordered table-condensed">
-  <thead>
-      <tr>
-        <th>Item ID</th>
-        <th>Item Name</th>
-        <th>Owner</th>
-        <th>Item Value</th>
-      </tr>
-    </thead>
-  <tbody>
-       {{#each Items}}
-       <tr>
-          <td>{{id}}</td>
-          <td>{{name}}</td>
-          <td>{{Member}}</td>
-          <td>{{value}}</td>
-      </tr>
-      {{/each}}
-  </tbody>
-</table>
+<p>&nbsp;</p>>
+ <div id="wrapper">
+        <div class="container">
+            <div class="content">
+                  <table class="table table-bordered table-condensed table-striped">
+                  <thead>
+                      <tr>
+                        <th>Item ID</th>
+                        <th>Item Name</th>
+                        <th>Owner</th>
+                        <th>Item Value</th>
+                      </tr>
+                    </thead>
+                  <tbody>
+                      {{#each Items}}
+                      <tr>
+                          <td>{{id}}</td>
+                          <td>{{name}}</td>
+                          <td>{{Member}}</td>
+                          <td>{{value}}</td>
+                      </tr>
+                      {{/each}}
+                  </tbody>
+                </table>
+            </div>
+        </div>
 
 </div>
 

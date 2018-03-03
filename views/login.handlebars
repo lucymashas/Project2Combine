@@ -13,12 +13,10 @@
 							    </div>
 						    </div>
               </div>     
-                  {{#if errors}}
-                    {{#each errors}}
+                  {{#if error}}
                     <div id="login-alert" class="alert alert-danger col-sm-12">
-                      {{this.msg}}
+                      {{error}}
                     </div>
-                    {{/each}}
                    {{/if}}
                   <div style="padding-top:30px" class="panel-body">
       
@@ -32,7 +30,7 @@
                       </div> 
                       <div class="input-group loginpd">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                          <input type ="text" name="password" class="form-control" placeholder="Enter Password"></input>
+                          <input type ="password" name="password" class="form-control" placeholder="Enter Password"></input>
                       </div>                        
                                       
                      

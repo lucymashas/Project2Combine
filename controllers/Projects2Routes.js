@@ -19,10 +19,10 @@ sequelizeConnection.sync
 // Create routes
 // ----------------------------------------------------
 
-// Index Redirect
+// Get Login Page
 router.get("/", function(req, res) {
-  res.render('login',{title: 'Personal Assets Login'});
-});
+  res.render("login", { error: req.flash('error')});
+    })
 
 router.get("/", function(req, res) {
   res.render('login',{title: 'Personal Assets Login'});
@@ -78,8 +78,10 @@ router.get('/index', function(req, res) {
 router.post('/login', passport.authenticate(
   'local', {
       successRedirect: '/index',
-      failureRedirect: '/'
+      failureRedirect: '/',
+      failureFlash: true
 }));
+
 
 router.get('/logout', function(req,res){
   req.logout();
@@ -97,9 +99,9 @@ router.post("/register", function(req, res) {
     req.checkBody('email','The email you entered is invalid, Try Again.').isEmail();
     req.checkBody('email','Email address must be between 4-100 characters long').len(8,100);
     req.checkBody('password','Password must be at least 8 characters long.').len(8,100);
-    // req.checkBody('password','Password must include one lowercase character, one uppercase character, a number, and a special character.').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*)(?=.*[^a-zA-Z0-9]).{8,}$/,"i");
-    // req.checkBody('passwordMatch','Password must be at least 8 characters long.').len(8,100);
-    // req.checkBody('passwordMatch','Password does not match, try again.').equals(password);
+    req.checkBody('password','Password must include one lowercase character, one uppercase character, a number, and a special character.').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, "i");
+    req.checkBody('passwordMatch','Password must be at least 8 characters long.').len(8,100);
+    req.checkBody('passwordMatch','Password does not match, try again.').equals(password);
     const errors = req.validationErrors();
     if (errors){
       //  console.log(`errors: ${JSON.stringify(errors)}`);

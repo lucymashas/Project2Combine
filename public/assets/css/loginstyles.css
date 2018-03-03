@@ -1,24 +1,24 @@
+body {
+    font-family: 'Karma', serif;
+    font-size: 14px;
+    /* background-color: @body-bg; */
+        margin-top: 20px;
+    /* background-image: linear-gradient(90deg, #d0d2d3, #939597); */
+    background-color:#AEBFC2 !important;
+  }
 .h1, h1 {
     font-family: 'Roboto', sans-serif;
     font-size: 36px;
     padding: 0 20px;
     margin: 0 0 10px 0;
-
 }
-
 h2{
     font-family: 'Roboto', sans-serif;
     text-align:center;
     margin-top:100px;
     margin-bottom:0;
     font-size:36px;
-
 }
-body {
-    margin-top: 20px;
-    /* background-image: linear-gradient(90deg, #d0d2d3, #939597); */
-    background-color:#AEBFC2 !important;
-  }
   .loginbtn{
     width:100%;
   }

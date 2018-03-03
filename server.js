@@ -5,6 +5,7 @@
 		var exphbs = require("express-handlebars");
 		var expressValidator = require('express-validator');
 		var passport = require('passport')
+
 	
 		//Authentication Package
 		var session = require('express-session');
@@ -12,6 +13,7 @@
 		var LocalStrategy = require('passport-local').Strategy;
 		var MySQLStore = require('express-mysql-session')(session);
 		var bcrypt = require('bcrypt');
+		var flash = require('connect-flash');
 
 		// Express set upls
 
@@ -56,6 +58,8 @@ app.use(session({
   saveUninitialized: false,
   // cookie: { secure: true }
 }))
+
+app.use(flash());
 //initialize passports - integrate with session
 app.use(passport.initialize());
 app.use(passport.session());
@@ -66,7 +70,9 @@ app.use(function (req,res,next){
 })
 
 //passport Local Strategy
-passport.use(new LocalStrategy(
+passport.use(new LocalStrategy({
+	passReqToCallBack : true
+},
   function(username,password,done){
 		console.log(username);
 		console.log(password);
@@ -75,17 +81,18 @@ passport.use(new LocalStrategy(
 
 		db.user.findOne({where: {username:username}}).then(function(user) {
 			if (!user) {
-				console.log('username does not exist')
-		    done(null,false);
+				return done(null,false,
+					 req.flash('message', 'Invalid unsername address or password'));
 			}
 			var isValidPassword = function(userpass, password) {
-							return bCrypt.compareSync(password, userpass);
+				return bCrypt.compareSync(password, userpass);
 					}
-			if (isValidPassword){
-				return done(null,{user_id:  user.dataValues.id})
-			}else{
-				return done(null,false);
-				}
+					if (isValidPassword){
+						return done(null,{user_id:  user.dataValues.id})
+					}else{
+						return done(null,false, 
+							req.flash('message','Authentication Failed'));
+					}
 			})
 		}
 	))
