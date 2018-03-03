@@ -69,6 +69,7 @@ header {
   width: 100%;
   border: 1px solid #9d9d9d;
   background-color: white;
+  cursor: pointer;
 }
 .table {
   background-color: white;
