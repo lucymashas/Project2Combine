@@ -1,0 +1,42 @@
+{{>header}}
+<h1>{{title}}</h1>
+    <div id="selection">
+        <div id="selection-inner">
+            <div id="container">
+                <div class="buttons">
+                       <div class="btn-group" data-toggle="buttons">
+                           <label class="btn btn-primary active">
+                               <input type="radio" name="options" id="option1" autocomplete="off" checked> View All
+                           </label>
+                           <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="options" id="option2" autocomplete="off" checked>Items
+                                </label>
+                                <label class="btn btn-primary">
+                                        <input type="radio" name="options" onclick="javascript:window.location.href='/radio3'; return false;"" id="option3" autocomplete="off" checked>Members
+                                    </label>
+                       </div><!-- end button group -->
+                </div>
+            </div>
+        </div>
+    </div>
+ <div id="wrapper">
+        <div class="container">
+            <div class="content">
+            <!-- Thumbnail section -->
+                <div class="row">
+                    {{#each items}}
+                    <div class="col-xs-3">
+                            <div class="thumbnail">
+                                    <img src="/assets/images/hmthumbnail.png" alt={{name}} key='{{itemID}}'>
+                                    <div class="caption" style='text-align: center'>{{name}}</div>
+                            </div>
+                    </div> 
+                    {{/each}}                 
+                </div><!-- End row -->
+                
+            </div>
+        </div>
+       
+    </div>
+

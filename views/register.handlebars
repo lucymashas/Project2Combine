@@ -1,9 +1,18 @@
-<h1>{{title}}</h1>
+{{>bkgd}}
+<h2>{{title}}</h2>
 <div id="container">
-      <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+      <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
           <div class="panel pinfo">
               <div class="panel-heading">
-                  <div class="panel-title">Register</div>
+                  <div class="row">
+							      <div class="col-xs-6">
+								      <a href="#" class="active" id="login-form-link">Register</a>
+							      </div>
+							    <div class="col-xs-6">
+								      <a href="/" id="register-form-link">Already Have an Account? Login</a>
+							    </div>
+						    </div>
+                  {{!-- <div class="panel-title">Register</div> --}}
               </div>     
                   {{#if errors}}
                     {{#each errors}}
@@ -19,25 +28,25 @@
                   <form action = "/register" method = "POST">  
                       <div class="input-group loginpd">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input type ="text" name="username" class="form-control" placeholder="username"></input>
+                        <input type ="text" name="username" class="form-control" placeholder="Enter User Name"></input>
                       </div> 
                       <div class="input-group loginpd">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                          <input type ="text" name="email" class="form-control" placeholder="Email"></input>
+                          <input type ="text" name="email" class="form-control" placeholder="Enter Email"></input>
                       </div> 
                       <div class="input-group loginpd">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                          <input type ="text" name="password" class="form-control" placeholder="Password"></input>
+                          <input type ="text" name="password" class="form-control" placeholder="Enter Password"></input>
                       </div>                        
                                       
                       <div class="input-group loginpd">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                          <input type ="text" name="passwordMatch" class="form-control" placeholder="RE-Enter Password"></input>
+                          <input type ="text" name="passwordMatch" class="form-control" placeholder="Re-enter Password"></input>
                       </div>  
                       <div class="form-group loginpd">
                           <!-- Button -->
                           <div class="col-sm-12 controls">
-                              <button type="submit" class="btn btn-success btn-action" id="text-enter-button">Submit</button>
+                              <button type="submit" class="btn btn-primary loginbtn" id="text-enter-button">Submit</button>
                           </div>
                       </div>
                   </form>     

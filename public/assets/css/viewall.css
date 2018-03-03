@@ -1,6 +1,11 @@
 body{
   font-family: 'Karma', serif;
 }
+
+ul.nav a:hover { 
+  color: #2F5F9C !important; 
+}
+
 header {
   margin-top: 10px;
   background: rgba(255,255,255,0.9);
@@ -43,7 +48,7 @@ header {
   padding-top: 80px;
 }
 #selection-inner {
-  padding: 15px 0px 15px 50px;
+  padding-top:15px;
 }
 .buttons {
   font-size: 14px;
@@ -69,4 +74,12 @@ header {
   width: 100%;
   border: 1px solid #9d9d9d;
   background-color: white;
+}
+.table {
+  background-color: white;
+}
+.navbar-inverse .navbar-brand:hover, 
+.navbar-inverse .navbar-brand:focus {
+  background-color: transparent;
+  color: #2F5F9C;
 }

@@ -21,48 +21,58 @@ sequelizeConnection.sync
 
 // Index Redirect
 router.get("/", function(req, res) {
-  res.render('login',{title: 'Personal Assets Management Login'});
+  res.render('login',{title: 'Personal Assets Login'});
   // res.render('index');
 });
 
 router.get("/", function(req, res) {
-  res.render('login',{title: 'Personal Assets Management Login'});
+  res.render('login',{title: 'Personal Assets Login'});
   // res.render('index');
 });
 
-router.get('/detail', function (req, res) {
-        models.items.findAll( {
-      //   group: models.items.loc
-        }).then(function(data){
-          // Pass the returned data into a Handlebars object and then render it
-          var hbsObject = { title: 'Locations', items: data }
-          res.render('detail', hbsObject);
-      }) 
-})
-
   router.get("/home", authenticationMiddleware(),
     function(req, res) {
-        models.loc.findAll({
+      models.Loc.findAll({
+      }).then(function(data){
+        // Pass the returned data into a Handlebars object and then render it
+        var hbsObject = { title: 'Locations', homebox: 'Loc', items: data }
+        res.render('index', hbsObject);
+    })
+});
 
-        }).then(function(data){
-          // Pass the returned data into a Handlebars object and then nder it
-          var hbsObject = { title: 'Locations', items: data }
-          res.render('index', hbsObject);
-      })
-      // models.items.findAll({
-      //   group: models.items.loc
+  router.get('/button1', function(req, res) {          
+    models.Loc.findAll({
+      }).then(function(data){
+        // Pass the returned data into a Handlebars object and then render it
+        var hbsObject = { title: 'Locations', homebox: 'Loc', items: data }
+        res.render('index', hbsObject);
+    })
+  })
 
-      //   }).then(function(data){
-      //     // Pass the returned data into a Handlebars object and then render it
-      //     var hbsObject = { title: 'Locations', items: data }
-      //     res.render('index', hbsObject);
-      // }
-  });
+  router.get('/button2', function(req, res) {           
+    models.Prodtype.findAll({
+      }).then(function(data){
+        // Pass the returned data into a Handlebars object and then render it
+        var hbsObject = { title: 'Product Types', homebox: 'PT', items: data }
+        res.render('index', hbsObject);
+    })
+  })
+
+  router.get('/button3', function(req, res) {
+    models.Member.findAll({
+      }).then(function(data){
+        // Pass the returned data into a Handlebars object and then render it
+        var hbsObject = { title: 'Owners', homebox: 'Mem',  items: data }
+        console.log(hbsObject)
+        res.render('index', hbsObject);
+    })
+})
+
 
 router.post('/login', passport.authenticate(
   'local', {
       successRedirect: '/home',
-      failureRedirect: '/login'
+      failureRedirect: '/'
 }));
 
 router.get('/logout', function(req,res){
@@ -72,7 +82,7 @@ router.get('/logout', function(req,res){
 });
   
 router.get("/register",function(req,res){
-  res.render('register',{title: 'Registration'});
+  res.render('register',{title: 'Personal Assets Registration'});
 });
 
 router.post("/register", function(req, res) {
@@ -109,7 +119,7 @@ router.post("/register", function(req, res) {
               if (!user) {
                   return done(null,false);
               } 
-          
+              
               const user_id = user.dataValues.id;
               req.login(user_id, function(err){
                 res.redirect('/home');
@@ -118,6 +128,50 @@ router.post("/register", function(req, res) {
           })
       })
     }
+});
+
+router.get('/detail/:menu/:location', function (req, res) {
+  var menu = req.params.menu;
+  var location = req.params.location;
+
+  if(menu=='Loc') {
+        models.Item.findAll({
+          where: {
+            Loc: req.params.location
+          }
+
+          }).then(function(data){
+            // Pass the returned data into a Handlebars object and then render it
+            var hbsObject = { title: 'Locations', homebox: 'Mem' , Items: data }
+            res.render('detail', hbsObject);
+      })
+  }
+
+  if(menu=='PT') {
+        models.Item.findAll({
+          where: {
+            Prodtype: req.params.location
+          }
+
+          }).then(function(data){
+            // Pass the returned data into a Handlebars object and then render it
+            var hbsObject = { title: 'Product Type', homebox: 'PT' , Items: data }
+            res.render('detail', hbsObject);
+      })
+  }
+
+  if(menu=='Mem') {
+        models.Item.findAll({
+          where: {
+            Member: req.params.location
+          }
+
+          }).then(function(data){
+            // Pass the returned data into a Handlebars object and then render it
+            var hbsObject = { title: 'Member', homebox: 'Mem' , Items: data }
+            res.render('detail', hbsObject);
+      })
+  }
 });
 
 

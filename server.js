@@ -16,7 +16,7 @@
 		// Express set upls
 
 		var app = express();
-		var PORT = process.env.PORT || 3000;
+		var PORT = process.env.PORT || 8080;
 
 		// Serve static content for the app from the "public" directory
 		app.use(express.static("./public"));
@@ -71,9 +71,9 @@ passport.use(new LocalStrategy(
 		console.log(username);
 		console.log(password);
 		// Extracts the sequelize connection from the models object
-		var sequelizeConnection = models.sequelize;
+		var db = require("./models");
 
-		models.User.findOne({where: {username:username}}).then(function(user) {
+		db.user.findOne({where: {username:username}}).then(function(user) {
 			if (!user) {
 				console.log('username does not exist')
 		    done(null,false);
@@ -85,8 +85,7 @@ passport.use(new LocalStrategy(
 				return done(null,{user_id:  user.dataValues.id})
 			}else{
 				return done(null,false);
-			}
-
+				}
 			})
 		}
 	))

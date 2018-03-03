@@ -2,13 +2,8 @@
 
 module.exports = function(sequelize,DataTypes) {
 
-      var residence = sequelize.define("residence", {
+      var Residence = sequelize.define("Residence", {
 
-        resID: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
 
         address1: {
             type: DataTypes.STRING,
@@ -38,17 +33,13 @@ module.exports = function(sequelize,DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false
 
-        },
-
-        userID: {
-            type: DataTypes.STRING,
-            allowNull: false
-
-        }        
+        }     
 
       });
- 
-return residence;
+
+
+
+   return Residence;
 
 };
 
